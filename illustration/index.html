@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Illustration Moodboard - 个人作品集</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bungee&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    body {
+      background: #000;
+    }
+
+    .illustration-shell {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 40px 24px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .illustration-board {
+      width: min(99vw, 1400px);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .board-header,
+    #moodGrid {
+      grid-column: 1 / -1;
+    }
+
+    #moodGrid {
+      column-count: 3;
+      column-gap: 20px;
+      width: 100%;
+    }
+
+    .mood-card {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 20px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(15, 15, 15, 0.85) 100%);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+      cursor: pointer;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, filter 0.28s ease;
+      break-inside: avoid;
+    }
+
+    .board-header {
+      text-align: center;
+      padding: 0 12px;
+    }
+
+    .board-title {
+      margin: 0 0 10px;
+      color: #ffd700;
+      font-family: 'Bungee', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      letter-spacing: 0.16em;
+      text-shadow: 0 0 26px rgba(255, 215, 0, 0.5);
+    }
+
+    .board-subtitle {
+      margin: 0;
+      color: #f4f5ff;
+      font-size: 1rem;
+      opacity: 0.78;
+      max-width: 760px;
+      margin-inline: auto;
+      line-height: 1.8;
+    }
+
+    .mood-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .mood-card:hover {
+      transform: translateY(-8px) scale(1.04);
+      box-shadow: 0 16px 48px rgba(255, 223, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.65);
+      filter: brightness(1.08);
+    }
+
+    .mood-card.large {
+      border-color: rgba(255, 223, 0, 0.5);
+      min-height: 360px;
+    }
+
+    .mood-card.featured {
+      border-color: #ffd700;
+      box-shadow: 0 12px 40px rgba(255, 223, 0, 0.32);
+    }
+
+    .mood-card.featured:hover {
+      box-shadow: 0 20px 60px rgba(255, 223, 0, 0.48), 0 8px 24px rgba(0, 0, 0, 0.65);
+    }
+
+    .image-modal {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(0, 0, 0, 0.92);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.24s ease;
+      z-index: 50;
+    }
+
+    .image-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      position: relative;
+      width: min(95vw, 1100px);
+      max-height: 92vh;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 0 120px rgba(255, 223, 0, 0.34);
+      background: rgba(10, 10, 10, 0.96);
+    }
+
+    .modal-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      background: #000;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      background: rgba(0, 0, 0, 0.55);
+      color: #ffd700;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      z-index: 1;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .modal-close:hover {
+      transform: scale(1.08);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    @media (max-width: 980px) {
+      #moodGrid {
+        column-count: 2;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .illustration-shell {
+        padding: 20px 12px;
+      }
+
+      #moodGrid {
+        column-count: 1;
+        column-gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-overlay"></div>
+  <div class="custom-cursor"></div>
+  <div class="illustration-shell">
+    <div class="illustration-board">
+      <div class="board-header">
+        <h1 class="board-title" id="categoryTitle">作品集</h1>
+        <p class="board-subtitle" id="categorySubtitle">点击任何画面可查看大图</p>
+      </div>
+      <div id="moodGrid"></div>
+    </div>
+  </div>
+
+  <div class="image-modal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" aria-label="关闭">×</button>
+      <img src="" alt="大图预览" />
+    </div>
+  </div>
+
+  <script src="../script.js"></script>
+  <script>
+    const imageData = {
+      character: [
+        { name: 'IMG_11.JPG', file: 'IMG_11.JPG', width: 800, height: 1000, large: true },
+        { name: 'IMG_12.JPG', file: 'IMG_12.JPG', width: 700, height: 900 },
+        { name: 'IMG_13.JPG', file: 'IMG_13.JPG', width: 700, height: 900 },
+        { name: 'IMG_14.JPG', file: 'IMG_14.JPG', width: 850, height: 1050, large: true },
+        { name: 'IMG_15.JPG', file: 'IMG_15.JPG', width: 700, height: 900 },
+        { name: 'IMG_16.JPG', file: 'IMG_16.JPG', width: 700, height: 900 },
+        { name: 'IMG_17.JPG', file: 'IMG_17.JPG', width: 700, height: 900 }
+      ],
+      scene: [
+        { name: 'IMG_22.JPG', file: 'IMG_22.JPG', width: 1000, height: 700 },
+        { name: 'IMG_23.JPG', file: 'IMG_23.JPG', width: 900, height: 750 },
+        { name: 'IMG_24.JPG', file: 'IMG_24.JPG', width: 1100, height: 800, large: true },
+        { name: 'IMG_25.JPG', file: 'IMG_25.JPG', width: 700, height: 900 }
+      ],
+      illustration: [
+        { name: 'IMG_32.jpg', file: 'IMG_32.jpg', width: 800, height: 1000, large: true },
+        { name: 'IMG_333.jpg', file: 'IMG_333.jpg', width: 700, height: 900 },
+        { name: 'IMG_34.JPG', file: 'IMG_34.JPG', width: 700, height: 900 },
+        { name: 'IMG_35.JPG', file: 'IMG_35.JPG', width: 900, height: 1100, large: true },
+        { name: 'IMG_36.JPG', file: 'IMG_36.JPG', width: 700, height: 900 },
+        { name: 'IMG_37.JPG', file: 'IMG_37.JPG', width: 700, height: 900 },
+        { name: 'IMG_38.JPG', file: 'IMG_38.JPG', width: 700, height: 900 },
+        { name: 'IMG_39.JPG', file: 'IMG_39.JPG', width: 700, height: 900 }
+      ]
+    };
+
+    const categoryNames = {
+      character: '角色设计',
+      scene: '场景设计',
+      illustration: '插画'
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('category') || 'character';
+
+    const titleEl = document.getElementById('categoryTitle');
+    const subtitleEl = document.getElementById('categorySubtitle');
+    const gridEl = document.getElementById('moodGrid');
+    const modal = document.querySelector('.image-modal');
+    const modalImage = modal.querySelector('img');
+    const modalClose = modal.querySelector('.modal-close');
+
+    titleEl.textContent = categoryNames[category];
+    subtitleEl.textContent = `${categoryNames[category]} - 点击任何画面可查看大图`;
+
+    const images = imageData[category] || [];
+    
+    images.forEach((img) => {
+      const card = document.createElement('div');
+      
+      card.className = `mood-card ${img.large ? 'large featured' : ''}`;
+      card.dataset.src = img.file;
+      
+      const imgEl = document.createElement('img');
+      imgEl.src = `./${img.file}`;
+      imgEl.alt = img.name;
+      imgEl.loading = 'lazy';
+      card.appendChild(imgEl);
+
+      card.addEventListener('click', () => {
+        modalImage.src = `./${img.file}`;
+        modalImage.alt = img.name;
+        modal.classList.add('active');
+      });
+
+      gridEl.appendChild(card);
+    });
+
+    const closeModal = () => {
+      modal.classList.remove('active');
+      modalImage.src = '';
+    };
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) closeModal();
+    });
+  </script>
+</body>
+</html>

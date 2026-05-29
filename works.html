@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>角色设计/场景设计/插画 - 个人作品集</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bungee&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: #000;
+    }
+
+    .works-shell {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .works-container {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .works-title {
+      color: #ffd700;
+      font-size: clamp(2.4rem, 3.8vw, 4rem);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-shadow: 0 0 36px rgba(255, 215, 0, 0.58);
+      font-family: 'Bungee', sans-serif;
+      margin: 0;
+      text-align: center;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .category-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      padding: 32px 28px;
+      border: 1.5px solid rgba(255, 223, 0, 0.85);
+      border-radius: 28px;
+      background: #ffd700;
+      color: #000000;
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 1.3rem;
+      text-shadow: none;
+      box-shadow: 0 0 38px rgba(255, 223, 0, 0.35), inset 0 0 20px rgba(255, 255, 255, 0.12);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, filter 0.28s ease;
+      z-index: 5;
+      animation: categoryFloat 6.8s ease-in-out infinite;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .category-btn::after {
+      content: '';
+      position: absolute;
+      inset: -28px;
+      border-radius: 28px;
+      background: radial-gradient(circle, rgba(255, 223, 0, 0.22), transparent 44%);
+      filter: blur(18px);
+      opacity: 0.75;
+      pointer-events: none;
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+
+    .category-btn:hover {
+      transform: translateY(-16px) scale(1.06);
+      box-shadow: 0 0 160px rgba(255, 223, 0, 0.58), inset 0 0 24px rgba(255, 255, 255, 0.96);
+      filter: brightness(1.18);
+    }
+
+    .category-btn:hover::after {
+      transform: scale(1.12);
+      opacity: 0.95;
+      background: radial-gradient(circle, rgba(255, 223, 0, 0.32), transparent 46%);
+    }
+
+    @keyframes categoryFloat {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+      }
+      25% {
+        transform: translateY(-8px) scale(1.02);
+      }
+      50% {
+        transform: translateY(-4px) scale(1.01);
+      }
+      75% {
+        transform: translateY(-10px) scale(1.02);
+      }
+    }
+
+    .category-btn:nth-child(1) {
+      animation-duration: 6.4s;
+      animation-delay: 0s;
+    }
+
+    .category-btn:nth-child(2) {
+      animation-duration: 7.2s;
+      animation-delay: 0.16s;
+    }
+
+    .category-btn:nth-child(3) {
+      animation-duration: 6.8s;
+      animation-delay: 0.32s;
+    }
+
+    @media (max-width: 768px) {
+      .works-title {
+        font-size: clamp(1.8rem, 3vw, 2.6rem);
+      }
+
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-btn {
+        min-height: 240px;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-overlay"></div>
+  <div class="custom-cursor"></div>
+  <div class="works-shell">
+    <div class="works-container">
+      <h1 class="works-title">角色设计 / 场景设计 / 插画</h1>
+      <div class="category-grid">
+        <a class="category-btn" href="illustration/index.html?category=character">角色设计</a>
+        <a class="category-btn" href="illustration/index.html?category=scene">场景设计</a>
+        <a class="category-btn" href="illustration/index.html?category=illustration">插画</a>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
